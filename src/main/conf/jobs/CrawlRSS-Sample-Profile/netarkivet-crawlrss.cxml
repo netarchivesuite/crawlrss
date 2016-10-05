@@ -77,10 +77,6 @@ bdb.cachePercent=40
 ## seeds properties
 seeds.sourceTagSeeds=false
 
-scope.rules[2].maxHops=25
-scope.rules[6].maxRepetitions=3
-scope.rules[3].maxTransHops=5
-scope.rules[3].maxSpeculativeHops=1
 
 ## Politeness overrides
 disposition.delayFactor=1.0
@@ -376,19 +372,20 @@ extractorJs.enabled=true
     </property>
   </bean>
 
-  <bean id="rssRuv" class="is.landsbokasafn.crawler.rss.RssSite">
-  <property name="name" value="ruv.is"/>
+  <bean id="rssDR" class="is.landsbokasafn.crawler.rss.RssSite">
+  <property name="name" value="dr.dk"/>
   <property name="minWaitInterval" value="1h30m"/>
   <property name="rssFeeds">
     <list>
       <bean class="is.landsbokasafn.crawler.rss.RssFeed">
-        <property name="uri" value="http://www.ruv.is/rss/frettir"/>
+        <property name="uri" value="http://www.dr.dk/nyheder/service/feeds/indland" />
         <property name="impliedPages">
           <list>
-            <value>http://www.ruv.is/</value>
+            <value>https://www.dr.dk/nyheder/</value>
           </list>
         </property>
       </bean>
+      <!-- Can add more rss feeds here
       <bean class="is.landsbokasafn.crawler.rss.RssFeed">
         <property name="uri" value="http://www.ruv.is/rss/innlent"/>
         <property name="impliedPages">
@@ -397,7 +394,7 @@ extractorJs.enabled=true
             <value>http://www.ruv.is/innlent</value>
           </list>
         </property>
-      </bean>
+      </bean> -->
     </list>
   </property>
 </bean>
