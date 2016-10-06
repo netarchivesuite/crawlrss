@@ -84,8 +84,8 @@ disposition.maxDelayMs=1000
 disposition.minDelayMs=300
 disposition.maxPerHostBandwidthUsageKbSec=500
 
-preparer.preferenceEmbedHops=1
-preparer.preferenceDepthHops=-1
+## preparer.preferenceEmbedHops=1
+## preparer.preferenceDepthHops=-1
 
 frontier.maxRetries=3
 frontier.retryDelaySeconds=300
@@ -372,32 +372,39 @@ extractorJs.enabled=true
     </property>
   </bean>
 
-  <bean id="rssDR" class="is.landsbokasafn.crawler.rss.RssSite">
-  <property name="name" value="dr.dk"/>
-  <property name="minWaitInterval" value="1h30m"/>
-  <property name="rssFeeds">
-    <list>
-      <bean class="is.landsbokasafn.crawler.rss.RssFeed">
-        <property name="uri" value="http://www.dr.dk/nyheder/service/feeds/indland" />
-        <property name="impliedPages">
-          <list>
-            <value>https://www.dr.dk/nyheder/</value>
-          </list>
+    <bean id="rssDR" class="is.landsbokasafn.crawler.rss.RssSite">
+        <property name="name" value="dr.dk"/>
+        <property name="minWaitInterval" value="1h30m"/>
+        <property name="rssFeeds">
+            <list>
+                <bean class="is.landsbokasafn.crawler.rss.RssFeed">
+                    <property name="uri" value="http://www.dr.dk/nyheder/service/feeds/indland" />
+                    <property name="impliedPages">
+                        <list>
+                            <value>https://www.dr.dk/nyheder/</value>
+                            <value>http://www.dr.dk/nyheder/allenyheder/indland</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean class="is.landsbokasafn.crawler.rss.RssFeed">
+                    <property name="uri" value="http://www.dr.dk/nyheder/service/feeds/udland" />
+                    <property name="impliedPages">
+                        <list>
+                            <value>http://www.dr.dk/nyheder/allenyheder/udland</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean class="is.landsbokasafn.crawler.rss.RssFeed">
+                    <property name="uri" value="http://www.dr.dk/nyheder/service/feeds/penge" />
+                    <property name="impliedPages">
+                        <list>
+                            <value>http://www.dr.dk/nyheder/allenyheder/penge</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
         </property>
-      </bean>
-      <!-- Can add more rss feeds here
-      <bean class="is.landsbokasafn.crawler.rss.RssFeed">
-        <property name="uri" value="http://www.ruv.is/rss/innlent"/>
-        <property name="impliedPages">
-          <list>
-            <value>http://www.ruv.is/</value>
-            <value>http://www.ruv.is/innlent</value>
-          </list>
-        </property>
-      </bean> -->
-    </list>
-  </property>
-</bean>
+    </bean>
 
   <!--
     OPTIONAL BUT RECOMMENDED BEANS
