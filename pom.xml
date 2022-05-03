@@ -44,17 +44,31 @@
   </organization>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <org.archive.heritrix.version>3.4.0-20190205</org.archive.heritrix.version>
+		<org.archive.heritrix.version>3.3.0-SNAPSHOT</org.archive.heritrix.version>
+		<heritrix3.version>3.3.0-LBS-2016-02</heritrix3.version>
+		<heritrix3-wrapper.version>1.0.0</heritrix3-wrapper.version>
   </properties>
 
-  <!-- Hack to ensure we can deploy a multi-module site under a prefix. See 
+  <!-- Hack to ensure we can deploy a multi-module site under a prefix. See
     https://github.com/github/maven-plugins/issues/22#issuecomment-8421445 -->
   <distributionManagement>
-    <site>
+        <!--<site>
       <id>github-pages-site</id>
       <name>Deployment through GitHub's site deployment plugin</name>
       <url>http://landsbokasafn.github.io/CrawlRSS/${project.version}/</url>
-    </site>
+        </site>   -->
+			<repository>
+				<id>sbforge-nexus</id>
+				<name>SBForge Nexus Repo manager</name>
+				<url>https://sbforge.org/nexus/content/repositories/releases</url>
+			</repository>
+
+			<snapshotRepository>
+				<id>sbforge-nexus</id>
+				<name>SBForge Nexus Repo manager</name>
+				<url>https://sbforge.org/nexus/content/repositories/snapshots/</url>
+			</snapshotRepository>
+
   </distributionManagement>
 
   <build>
@@ -143,16 +157,31 @@
     </dependency>
     <dependency>
       <groupId>org.archive.heritrix</groupId>
-      <artifactId>heritrix-modules</artifactId>
-      <version>${org.archive.heritrix.version}</version>
-      <scope>provided</scope>
+			<artifactId>heritrix-engine</artifactId>
+			<version>${heritrix3.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.archive.heritrix</groupId>
+			<artifactId>heritrix</artifactId>
+			<version>${heritrix3.version}</version>
+			<classifier>dist</classifier>
+			<type>zip</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.archive.heritrix</groupId>
+			<artifactId>heritrix-contrib</artifactId>
+			<version>${heritrix3.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.archive.heritrix</groupId>
-      <artifactId>heritrix-engine</artifactId>
-      <version>${org.archive.heritrix.version}</version>
+			<artifactId>heritrix-modules</artifactId>
+			<version>${heritrix3.version}</version>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
@@ -194,7 +223,8 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
-      <version>3.1.2.RELEASE</version>
+			<!--<version>3.1.2.RELEASE</version> -->
+			 <version>3.0.5.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -235,5 +265,37 @@
       </plugin>
     </plugins>
   </reporting>
+
+    <repositories>
+        <!-- Heritrix dependencies come from here for now -->
+        <repository>
+            <id>internetarchive</id>
+            <name>Internet Archive Maven Repository</name>
+            <url>http://builds.archive.org/maven2</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </releases>
+            <!--<snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </snapshots>-->
+        </repository>
+
+				<repository>
+					<id>sbforge-nexus</id>
+					<url>https://sbforge.org/nexus/content/groups/public</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+
+		</repositories>
 
 </project>
