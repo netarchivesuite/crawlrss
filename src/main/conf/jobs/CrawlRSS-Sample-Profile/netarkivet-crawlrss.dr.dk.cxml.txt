@@ -174,9 +174,9 @@ extractorJs.enabled=true
  <!-- ConfigFile approach: specifying external seeds.txt file -->
  <bean id="seeds" class="org.archive.modules.seeds.TextSeedModule">
   <property name="textSource">
-   <bean class="org.archive.spring.ConfigFile">
-    <property name="path" value="seeds.txt" />
-   </bean>
+      <bean class="org.archive.spring.ConfigString">
+         <property name="value" value="http://foo.invalid" />
+      </bean>
   </property>
   <property name="sourceTagSeeds" value="false"/> 
  </bean>
@@ -265,13 +265,15 @@ extractorJs.enabled=true
 
  <bean id="fetchHttp" class="org.archive.modules.fetcher.FetchHTTP">
  </bean>
-  <bean id="extractorRss" class="is.landsbokasafn.crawler.rss.RssExtractor">
-  </bean>
+
  <bean id="extractorHttp" class="org.archive.modules.extractor.ExtractorHTTP">
  </bean>
 
  <bean id="extractorHtml" class="org.archive.modules.extractor.ExtractorHTML">
  </bean>
+
+  <bean id="extractorRss" class="is.landsbokasafn.crawler.rss.RssExtractor">
+  </bean>
 
  <bean id="extractorCss" class="org.archive.modules.extractor.ExtractorCSS">
  </bean> 
@@ -286,6 +288,7 @@ extractorJs.enabled=true
  <bean id="fetchProcessors" class="org.archive.modules.FetchChain">
   <property name="processors">
    <list>
+
     <!-- recheck scope, if so enabled... -->
     <ref bean="preselector"/>
     <!-- ...then verify or trigger prerequisite URIs fetched, allow crawling... -->
@@ -299,7 +302,7 @@ extractorJs.enabled=true
     <!-- ...fetch if HTTP URI... -->
     <ref bean="fetchHttp"/>
      <!-- ...extract outlinks from RSS feed... -->
-     <ref bean="extractorRss"/>
+             <ref bean="extractorRss"/>
     <!-- ...extract oulinks from HTTP headers... -->
     <ref bean="extractorHttp"/>
     <!-- ...extract oulinks from HTML content... -->
@@ -378,7 +381,7 @@ extractorJs.enabled=true
         <property name="rssFeeds">
             <list>
                 <bean class="is.landsbokasafn.crawler.rss.RssFeed">
-                    <property name="uri" value="http://www.dr.dk/nyheder/service/feeds/indland" />
+                    <property name="uri" value="https://www.dr.dk/nyheder/service/feeds/indland"/>
                     <property name="impliedPages">
                         <list>
                             <value>https://www.dr.dk/nyheder/</value>
@@ -387,7 +390,7 @@ extractorJs.enabled=true
                     </property>
                 </bean>
                 <bean class="is.landsbokasafn.crawler.rss.RssFeed">
-                    <property name="uri" value="http://www.dr.dk/nyheder/service/feeds/udland" />
+                    <property name="uri" value="https://www.dr.dk/nyheder/service/feeds/udland" />
                     <property name="impliedPages">
                         <list>
                             <value>http://www.dr.dk/nyheder/allenyheder/udland</value>
@@ -395,7 +398,7 @@ extractorJs.enabled=true
                     </property>
                 </bean>
                 <bean class="is.landsbokasafn.crawler.rss.RssFeed">
-                    <property name="uri" value="http://www.dr.dk/nyheder/service/feeds/penge" />
+                    <property name="uri" value="https://www.dr.dk/nyheder/service/feeds/penge" />
                     <property name="impliedPages">
                         <list>
                             <value>http://www.dr.dk/nyheder/allenyheder/penge</value>
