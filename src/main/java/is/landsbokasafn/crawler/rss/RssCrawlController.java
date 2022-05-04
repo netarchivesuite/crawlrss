@@ -53,13 +53,6 @@ public class RssCrawlController implements
 {
     private static final Logger log = Logger.getLogger(RssCrawlController.class.getName());
 
-    static {
-		CrawlURI.getPersistentDataKeys().add(RSS_SITE);
-		CrawlURI.getPersistentDataKeys().add(RSS_URI_TYPE);
-		CrawlURI.getPersistentDataKeys().add(RSS_MOST_RECENTLY_SEEN);
-		CrawlURI.getPersistentDataKeys().add(RSS_IMPLIED_LINKS);
-    }
-
 	boolean shouldStop = false;
 	boolean started = false;
 	
@@ -300,21 +293,30 @@ public class RssCrawlController implements
 	
 	private void finished(CrawlURI curi){ 
 		log.fine(curi.getURI());
+		RssSite siteFor = getSiteFor(curi);
 		switch (getUriType(curi)) {
-			case RSS_FEED : 
-				getSiteFor(curi).noteFeedCrawled(curi);
+			case RSS_FEED :
+				if (siteFor != null) {
+					siteFor.noteFeedCrawled(curi);
+				}
 				break;
 			case RSS_LINK :
 			case RSS_INFERRED :
 			case RSS_DERIVED :
-				getSiteFor(curi).decrementInProgressURLs();
+				if (siteFor != null) {
+					siteFor.decrementInProgressURLs();
+				}
 				break;
 		}
 	}
 
 	private RssSite getSiteFor(CrawlURI curi) {
-		String siteName = (String)curi.getData().get(RssAttributeConstants.RSS_SITE);
-		return sites.get(siteName);		
+		try {
+			String siteName = (String)curi.getData().get(RssAttributeConstants.RSS_SITE);
+			return sites.get(siteName);
+		} catch (Exception e) {
+           return null;
+		}
 	}
 	
 	private RssUriType getUriType(CrawlURI curi) {
