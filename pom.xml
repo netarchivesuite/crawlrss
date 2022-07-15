@@ -34,9 +34,9 @@
   </developers>
 
   <scm>
-    <connection>scm:git://github.com/Landsbokasafn/crawlrss.git</connection>
-    <developerConnection>scm:https://kris-sigur@github.com/Landsbokasafn/crawlrss.git</developerConnection>
-    <url>https://github.com/Landsbokasafn/crawlrss</url>
+    <connection>scm:git://github.com/netarchivesuite/crawlrss.git</connection>
+    <developerConnection>scm:git:https://github.com/netarchivesuite/crawlrss.git</developerConnection>
+    <url>https://github.com/netarchivesuite/crawlrss</url>
   </scm>
   <organization>
     <name>National and University Library of Iceland</name>
@@ -44,10 +44,10 @@
   </organization>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.archive.heritrix.version>3.4.0-20210923</org.archive.heritrix.version>
-        <heritrix3.version>3.4.0-20210923</heritrix3.version>
+		<!--<org.archive.heritrix.version>3.4.0-20210923</org.archive.heritrix.version>-->
+        <heritrix3.version>3.4.0-NAS-7.4</heritrix3.version>
 		<!--<heritrix3.version>3.3.0-LBS-2016-02</heritrix3.version>-->
-		<heritrix3-wrapper.version>1.0.0</heritrix3-wrapper.version>
+		<heritrix3-wrapper.version>1.0.5</heritrix3-wrapper.version>
   </properties>
 
   <!-- Hack to ensure we can deploy a multi-module site under a prefix. See
@@ -153,7 +153,7 @@
     <dependency>
       <groupId>org.archive.heritrix</groupId>
       <artifactId>heritrix-commons</artifactId>
-      <version>${org.archive.heritrix.version}</version>
+      <version>${heritrix3.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
