@@ -34,9 +34,9 @@
   </developers>
 
   <scm>
-    <connection>scm:git://github.com/netarchivesuite/crawlrss.git</connection>
-    <developerConnection>scm:git:https://github.com/netarchivesuite/crawlrss.git</developerConnection>
-    <url>https://github.com/netarchivesuite/crawlrss</url>
+    <connection>scm:git:ssh://github.com/netarchivesuite/crawlrss.git</connection>
+    <!-- <developerConnection>scm:git:https://github.com/netarchivesuite/crawlrss.git</developerConnection>
+    <url>https://github.com/netarchivesuite/crawlrss</url> -->
   </scm>
   <organization>
     <name>National and University Library of Iceland</name>
