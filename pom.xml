@@ -13,7 +13,7 @@
 -->
   <groupId>is.landsbokasafn.crawl-rss</groupId>
   <artifactId>crawl-rss</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.3</version>
   <name>Crawler RSS</name>
   <description>RSS crawling add-on for Heritrix 3</description>
 
@@ -47,7 +47,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!--<org.archive.heritrix.version>3.4.0-20210923</org.archive.heritrix.version>
         <heritrix3.version>3.4.0-20210923</heritrix3.version>-->
-		<heritrix3.version>3.4.0-NAS-7.4</heritrix3.version>
+		<heritrix3.version>3.4.0-NAS-7.6</heritrix3.version>
 		<heritrix3-wrapper.version>1.0.5</heritrix3-wrapper.version>
   </properties>
 
