@@ -13,7 +13,7 @@
 -->
   <groupId>is.landsbokasafn.crawl-rss</groupId>
   <artifactId>crawl-rss</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4-SNAPSHOT</version>
   <name>Crawler RSS</name>
   <description>RSS crawling add-on for Heritrix 3</description>
 
@@ -47,8 +47,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!--<org.archive.heritrix.version>3.4.0-20210923</org.archive.heritrix.version>
         <heritrix3.version>3.4.0-20210923</heritrix3.version>-->
-		<heritrix3.version>3.4.0-NAS-7.6</heritrix3.version>
-		<heritrix3-wrapper.version>1.0.5</heritrix3-wrapper.version>
+		<heritrix3.version>3.13.0</heritrix3.version>
+		<heritrix3-wrapper.version>1.1.0</heritrix3-wrapper.version>
   </properties>
 
   <!-- Hack to ensure we can deploy a multi-module site under a prefix. See
@@ -146,6 +146,20 @@
   </build>
 
   <dependencies>
+    <!-- Source: https://mvnrepository.com/artifact/joda-time/joda-time -->
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.14.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <!-- Source: https://mvnrepository.com/artifact/commons-httpclient/commons-httpclient -->
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.1</version>
+      <scope>compile</scope>
+    </dependency>
     <dependency>
       <groupId>rome</groupId>
       <artifactId>rome</artifactId>
@@ -248,10 +262,19 @@
       <artifactId>hibernate-ehcache</artifactId>
       <version>3.3.2.GA</version>
     </dependency>
+    <!--
     <dependency>
       <groupId>javax.annotation</groupId>
       <artifactId>javax.annotation-api</artifactId>
       <version>1.3.2</version>
+    </dependency>
+    -->
+    <!-- Source: https://mvnrepository.com/artifact/jakarta.annotation/jakarta.annotation-api -->
+    <dependency>
+      <groupId>jakarta.annotation</groupId>
+      <artifactId>jakarta.annotation-api</artifactId>
+      <version>3.0.0</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 
