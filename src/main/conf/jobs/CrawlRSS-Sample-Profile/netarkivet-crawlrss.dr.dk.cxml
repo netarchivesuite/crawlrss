@@ -64,7 +64,7 @@ crawlLimiter.maxDocumentsDownload=0
 ## MaxTimeseconds inserted by NetarchiveSuite (Delete line, if behaviour unwanted)
 crawlLimiter.maxTimeSeconds=%{MAX_TIME_SECONDS_PLACEHOLDER}
 
-crawlController.maxToeThreads=250
+crawlController.maxToeThreads=50
 crawlController.recorderOutBufferBytes=4096
 crawlController.recorderInBufferBytes=65536
 crawlController.pauseAtStart=false
@@ -132,7 +132,7 @@ fetchHttp.sendRange=false
 extractorHttp.enabled=true
 extractorHtml.enabled=true
 extractorHtml.extractJavascript=true
-extractorHtml.treatFramesAsEmbedLinks=true
+extractorHtml.treatFramesAsEmbedLinks=false
 extractorHtml.ignoreFormActionUrls=true
 extractorHtml.extractValueAttributes=false
 extractorHtml.ignoreUnexpectedHtml=true
@@ -192,104 +192,6 @@ extractorJs.enabled=true
      <!-- ...then ACCEPT based on the custom RSS scoper... -->
      <bean class="is.landsbokasafn.crawler.rss.RssInScopeDecideRule">
      </bean>
-    <!-- ...and ACCEPT those from a configurable (initially empty) set of URI regexes... -->
-    <bean class="org.archive.modules.deciderules.MatchesListRegexDecideRule">
-        <property name="decision" value="ACCEPT" />
-        <property name="timeoutPerRegexSeconds" value="5" />
-        <property name="listLogicalOr" value="true" />
-        <property name="regexList">
-            <list>
-                <value>^https:\/\/media\.gettyimages\.com\/.*</value>
-                <value>^https:\/\/transform-cf1\.nws\.ai\/.*</value>
-                <value>^https:\/\/api\.nws\.ai\/.*</value>
-                <value>^https:\/\/cdn\.ampproject\.org\/.*</value>
-                <value>^https:\/\/consent\.cookiebot\.com\/.*</value>
-                <value>^https:\/\/svr\.nws\.ai\/.*</value>
-                <value>^https:\/\/trackerapi\.ebxcdn\.com\/.*</value>
-                <value>^https:\/\/cdn\.thenewsroom\.io\/.*</value>
-                <value>^https?:\/\/content\.jwplatform\.com\/.*</value>
-                <value>^https?:\/\/videos-cloudfront\.jwpsrv\.com\/.*</value>
-                <value>^https?:\/\/([^\.]+\.)?mc\.tritondigital\.com\/.*</value>
-                <value>^https?:\/\/([^\.]+\.)?akamaized\.net\/.*</value>
-                <value>^https?:\/\/cdn\.videosyndicate\.io.*</value>
-                <value>^https?:\/\/cdn\.jwplayer\.com\/videos\/.*</value>
-                <value>^https?:\/\/([^\.]+\.)cloudfront\.net\/binary</value>
-                <value>^https?:\/\/mcdn\.podbean\.com\/mf\/web\/.*</value>
-                <value>^https?:\/\/media\.blubrry\.com\/.*mp[34].*</value>
-                <value>^https?:\/\/intetnytfravestfronten\.dk\/.*mp3.*</value>
-                <!--<value>^https?:\/\/[^\.]+\.podbean\.com\/.*</value>-->
-            </list>
-        </property>
-    </bean>
-    <!-- ...and ACCEPT those Heritrix Discovery Path that includes I... -->
-    <bean class="org.archive.modules.deciderules.HopsPathMatchesRegexDecideRule">
-        <property name="decision" value="ACCEPT"/>
-        <property name="regex" value="^.*I+$"/>
-    </bean>
-    <!-- ...and REJECT those Heritrix Discovery Path that more than 9 X... -->
-    <bean class="org.archive.modules.deciderules.HopsPathMatchesRegexDecideRule">
-        <property name="decision" value="REJECT"/>
-        <property name="regex" value="^L(R)?XXXXXXXXX+$"/>
-    </bean>
-     <!-- ...and REJECT those from a configurable (initially empty) set of URI regexes... -->
-     <bean class="org.archive.modules.deciderules.MatchesListRegexDecideRule">
-         <property name="decision" value="REJECT" />
-         <property name="timeoutPerRegexSeconds" value="5" />
-         <property name="listLogicalOr" value="true" />
-         <property name="regexList">
-             <list>
-                 <!-- NETARCHIVESUITE CRAWLTRAP FILTERS (START)
-                 Here we inject our local and global crawlertraps, domain specific crawlertraps -->
-                 <value>.*ekstrabladet\.dk.*\/eb_(noconsent|forbrug|forside|krimi|nyheder|penge|ros|sport|underholdning)(?:_|$)(?:(halfpage[1-4]|mediumrectangle|megaboard|monster|monster[1-9]|topscroll)|$)(?:_|$)(?:(scribble|artikel|dynamisk[1-4]|play|top|bund)|$)</value>
-                 <value>.*ekstrabladet\.dk.*\/ebjs\.(setReady|run|ready)$</value>
-                 <value>.*ekstrabladet\.dk.*\/cog6RsN8rxSFyjh63sHFo9Uoj53Nlltr3wk8Te4ujVP\.S7$</value>
-                 <value>.*ekstrabladet\.dk/.*\/ekstrabladet\/(sport|nyheder|underholdning|forbrug|musik|ferie|nationen|plus|play)\/.*$</value>
-                 <value>^https?:\/\/(www\.)?[a-z_-]+\.\w{2,3}.*\/mejs\.[a-z_-]+.*</value>
-                 <value>.*\/gtm\.[^\/]+$</value>
-                 <value>.*\/developer_id\.dZTNiMT$</value>
-                 <value>.*\/current(_add)?\.(rf|fd|fd|typ|trm|src|mdm|cnt|cmp|tct|plt|fmt|ep)$</value>
-                 <value>.*\/udata\.(uag|vst)$</value>
-                 <value>.*\/(jw)?player\.(volume|started|ended)$</value>
-                 <value>.*\/OneSignalSDK(Updater)?Worker\.js$</value>
-                 <value>.*\/\?search=$</value>
-                 <value>.*\/mm\/dd\/yyyy$</value>
-                 <value>.*\/ekstra_bladet\/eb_noconsent\/eb_noconsent_megaboard_top_new$</value>
-                 <value>.*\.[^/]+\/.*\/wp-includes\/js\/dist\/a11y\.js$</value>
-                 <value>.*\/elementor\/lazyload\/observe$</value>
-                 <value>.*\/gform\/theme\/scripts_loaded$</value>
-                 <value>.*\/includes\/js\/index\.js$</value>
-                 <value>.*\/locations\/cities\/\?orderby=ip$</value>
-                 <value>^https?:\/\/www\.podbean\.com\/site\/podcatcher\/.*</value>
-                 <value>^https?:\/\/podbean\.com$</value>
-                 <value>^https?:\/\/www\.podbean\.com\/free-audiobooks$</value>
-                 <value>^https?:\/\/www\.podbean\.com\/careers$</value>
-                 <value>^https?:\/\/www\.podbean\.com\/$</value>
-                 <value>^https?:\/\/media\.borsen\.dk\/size\/615\/borsen-dk\/images\/.*\.jpg\.jpg$</value>
-                 <value>^https?:\/\/media\.borsen\.dk\/size\/615\/borsen-dk\/images\/landscape\/.*\.(JPG\.jpg|png\.png)$</value>
-                 <value>^https?:\/\/admin5\.podbean\.com\/.*</value>
-                 <value>^https?:\/\/www\.podbean\.com\/podbean-terms$</value>
-                 <value>^https?:\/\/www\.podbean\.com\/Podbean-partner-privacy$</value>
-                 <value>^https?:\/\/www\.podbean\.com\/(about-us|advertise-your-podcast-on-podbean-app|affiliate|all|amwayina3rdji7t7|apple-podcasts-subscriptions|arts-podcasts|audio-recorder|awm|blog-to-podcast|BOGP|borsen27c568sv|Brand-Resources|business-podcasts|careers|christian-podcasting|church-audio-live-stream|comedy-podcasts|contact-us|cookies|create-a-podcast|customer-service-video-training-podcast-platform|dctm|dennikn|education-podcast|education-podcasts|favicon.ico|fiction-podcasts|free-audiobooks|free-guide-internal-communications-podcast|gatewaylife|government-podcasts|green-initiative|guide-to-podcast-advertising|headphone-guide-for-podcasting|health-and-fitness-podcasts|herocomplexwae35tgr|history-podcasts|HooverInstitution|how-to-monetize-a-podcast|how-to-promote-your-podcast|how-to-record-your-podcast|how-to-start-a-corporate-podcast|how-to-start-a-live-podcast|how-to-start-a-podcast|information|kids-and-family-podcasts|KPMG|leisure-podcasts|live-list|livestream|mayoclinic|missiontothemoon|mitchellinstituteaerospaceadvantageuybxqarb|mobile-podcast-recording-guide|music-podcasts|mustreadalaska|new-features|new-noteworthy-podcasts|news-podcasts|paychex|Podbean-ad-terms|Podbean-aup|Podbean-general-TOU|Podbean-infringement|Podbean-partner-privacy|Podbean-podcaster-monetize-terms|Podbean-podcaster-terms|podbean-terms|podbean-terms-ppnu|podcast-academy|podcast-ai|podcast-app-iphone-android-mobile|podcast-hosting-features|podcast-hosting-pricing|press|privacy|privacy-ppnu|private-video-hosting|religion-and-spirituality-podcasts|remote-podcast-recording|sales-training-video-podcast-plastform|science-podcasts|sermon-audio|sjxkpz2gmnu9r7|soc2-type2|society-and-culture-podcasts|sports-podcasts|start-audio-blog|start-podcast|start-video-podcast|switch-podcast-to-podbean|technology-podcasts|true-crime-podcasts|tv-and-film-podcasts|youtube-to-podcast)$</value>
-                 <value>^https?:\/\/server\.symfony\.berlingske\.aws\.berlingskemedia\.net\/.*</value>
-                 <value>^https?:\/\/server\.symfony\.euroinvestor\.aws\.berlingskemedia\.net\/.*</value>
-                 <value>^https?:\/\/jyllands-posten\.dk\/[^\/]+\/[^\/]+\/.*\/static\/chunks\/[^\/]+\.js$</value>
-                 <value>^https?:\/\/www\.altinget\.dk\/[^\/]+\/artikel\/.*\.[jJ][pP][gG]$</value>
-                 <value>^https?:\/\/ekstrabladet\.dk\/[^\/]+\/.*module\.js$</value>
-                 <value>^https?:\/\/ekstrabladet\.dk\/[^\/]+\/.*\/payment\/plus$</value>
-                 <value>^https?:\/\/ekstrabladet\.dk\/[^\/]+\/.*\/Europe\/Berlin$</value>
-                 <value>^https?:\/\/ekstrabladet\.dk\/[^\/]+\/.*\/ekstrabladet\/(krimi|penge|nyheder|sport|underholdning|side9|sex_og_samliv|plus|musik|incoming|forbrug)$</value>
-                 <value>^https?:\/\/ekstrabladet\.dk\/[^\/]+\/.*\/side9\/maanedens$</value>
-                 <value>^https?:\/\/ekstrabladet\.dk\/[^\/]+\/.*\/eb_forside\/eb_forside_megaboard_top_new$</value>
-                 <value>^https?:\/\/(www\.)?tv2kosmopol\.dk\/.*\/%22$</value>
-                 <value>^https?:\/\/(www\.)?danmarksfrihedsraad\.com\/.*\/core\/[^\/]+$</value>
-                 <value>^https?:\/\/(www\.)?nordfront\.dk\/.*\/(admin-ajax\.php|matomo\.js|matomo\.php|Nordfront\.dk)$</value>
-                 <value>^https?:\/\/(www\.)?nordfront\.dk\/.*\/(Billedtekster\/Undertekster|contact-form-7\/v1|Interview\/reportage|Multikultur\/masseindvandring|plugins\/tubepress|wp-content\/tubepress-content)$</value>
-                 <value>.*\/contact-form-7\/v1$</value>
-                 <!-- NETARCHIVESUITE CRAWLTRAP FILTERS (END) -->
-                 <value>^https?:\/\/(www\.)?pure\..+\.dk.*</value>
-             </list>
-         </property>
-     </bean>
     <!-- ...but always ACCEPT those marked as prerequisites for another URI... -->
     <bean class="org.archive.modules.deciderules.PrerequisiteAcceptDecideRule">
     </bean>
@@ -333,9 +235,9 @@ extractorJs.enabled=true
     <!-- <property name="canonicalizationPolicy">
           <ref bean="canonicalizationPolicy" />
          </property> -->
-    <property name="queueAssignmentPolicy">
+    <!-- <property name="queueAssignmentPolicy">
           <ref bean="queueAssignmentPolicy" />
-    </property>
+         </property> -->
     <!-- <property name="uriPrecedencePolicy">
           <ref bean="uriPrecedencePolicy" />
          </property> -->
@@ -376,278 +278,7 @@ extractorJs.enabled=true
  <bean id="extractorCss" class="org.archive.modules.extractor.ExtractorCSS">
  </bean> 
 
- <bean id="extractorJs" class="org.archive.modules.extractor.ConfigurableExtractorJS">
-   <property name="strict" value="false" />
-   <property name="maximumCandidateLength" value="150"/>
-   <property name="rejectRelativeMatchingRegexList">
-     <list>
-       <!-- Netarkivet addons -->
-       <value>^script\.js$</value>
-       <value>^includes/js/index\.js$</value>
-       <value>^_next/static/chunks/.*</value>
-       <value>^static/chunks/.*</value>
-       <value>^wrapperMessagingWithoutDetection\.js$</value>
-       <value>^bootstrap\.js($|\?ver=.*)</value>
-       <value>^googlemap\.js($|\?ver=.*)</value>
-       <value>^i18n\.[^/]+$</value>
-       <value>^actions\.[^/]+$</value>
-       <value>^state\.[^/]+$</value>
-       <value>^react\.[^/]+$</value>
-       <value>^internal\.[^/]+$</value>
-       <value>^svStandardLib_time\.[^/]+$</value>
-       <value>^joomla\.[^/]+$</value>
-       <value>^system\.[^/]+$</value>
-       <value>^Period\.[^/]+$</value>
-       <value>^0\.[^/]+$</value>
-       <value>^v2\.[^/]+$</value>
-       <value>^fields\.[^/]+$</value>
-       <value>^1\.[^/]+$</value>
-       <value>^TextSearch\.[^/]+$</value>
-       <value>^4\.[^/]+$</value>
-       <value>^-0\.[^/]+$</value>
-       <value>^Areas\.[^/]+$</value>
-       <value>^bootstrap\.[^/]+$</value>
-       <value>^web\.[^/]+$</value>
-       <value>^12\.[^/]+$</value>
-       <value>^-1\.[^/]+$</value>
-       <value>^oneclick\.[^/]+$</value>
-       <value>^app\.[^/]+$</value>
-       <value>^slideshow\.[^/]+$</value>
-       <value>^widget\.[^/]+$</value>
-       <value>^master\.[^/]+$</value>
-       <value>^dualCurrency\.[^/]+$</value>
-       <value>^easing\.[^/]+$</value>
-       <value>^cookie-categories\.[^/]+$</value>
-       <value>^classes\.[^/]+$</value>
-       <value>^selectors\.[^/]+$</value>
-       <value>^domain-only\.[^/]+$</value>
-       <value>^ui\.[^/]+$</value>
-       <value>^wordfence_lh=.+$</value>
-       <value>^api/[^/]+/called$</value>
-       <value>^contact-form-[0-9]/v[0-9]$</value>
-       <value>^current_add\.[a-z][a-z]$</value>
-       <value>^jetpack_vendor/.*$</value>
-       <value>^wp/v[0-9]+/$</value>
-       <!-- A common thing in JS is "TAGNAME.SOMECLASS". Ignore for most tags. Same can be seen for EVENT.SOMETHING -->
-       <value>^a\.[^/]+$</value>
-       <value>^p\.[^/]+$</value>
-       <value>^dialog\.[^/]+$</value>
-       <value>^change\.[^/]+$</value>
-       <value>^loaded\.[^/]+$</value>
-       <value>^div\.[^/]+$</value>
-       <value>^document\.[^/]+$</value>
-       <value>^img\.[^/]+$</value>
-       <value>^input\.[^/]+$</value>
-       <value>^window\.[^/]+$</value>
-       <value>^edge\.[^/]+$</value>
-       <value>^form\.[^/]+$</value>
-       <value>^li\.[^/]+$</value>
-       <value>^ls\.[^/]+$</value>
-       <value>^experimental\.[^/]+$</value>
-       <value>^span\.[^/]+$</value>
-       <value>^table\.[^/]+$</value>
-       <value>^ul\.[^/]+$</value>
-       <value>^click\.[^/]+$</value>
-       <value>^keydown\.[^/]+$</value>
-       <value>^keyup\.[^/]+$</value>
-       <value>^blur\.[^/]+$</value>
-       <value>^body\.[^/]+$</value>
-       <value>^paste\.[^/]+$</value>
-       <value>^scroll\.[^/]+$</value>
-       <value>^submit\.[^/]+$</value>
-       <value>^cut\.[^/]+$</value>
-       <value>^filter\.[^/]+$</value>
-       <value>^focus\.[^/]+$</value>
-       <value>^touchend\.[^/]+$</value>
-       <value>^touchmove\.[^/]+$</value>
-       <value>^touchstart\.[^/]+$</value>
-       <value>^mouseout\.[^/]+$</value>
-       <value>^mouseover\.[^/]+$</value>
-       <value>^mouseleave\.[^/]+$</value>
-       <value>^mouseenter\.[^/]+$</value>
-       <value>^mouseup\.[^/]+$</value>
-       <value>^mousedown\.[^/]+$</value>
-       <value>^translations\.[^/]+$</value>
-       <value>^sw-modern\.[^/]+$</value>
-       <value>^owl\.[^/]+$</value>
-       <value>^sw-legacy\.[^/]+$</value>
-       <value>^a11y\.[^/]+$</value>
-       <value>^gtm4wp\.[^/]+$</value>
-       <value>^resize\.[^/]+$</value>
-       <value>^mousewheel\.[^/]+$</value>
-       <value>^gbar(\.|_)[^/]+$</value>
-       <value>^stg\.[^/]+$</value>
-       <value>^Number\.[^/]+$</value>
-       <value>^View\.[^/]+$</value>
-       <value>^labels\.[^/]+$</value>
-       <value>^geometry\.[^/]+$</value>
-       <value>^landscape\.[^/]+$</value>
-       <value>^road\.[^/]+$</value>
-       <value>^newrelic\.[^/]+$</value>
-       <value>^Array\.[^/]+$</value>
-       <value>^Symbol\.[^/]+$</value>
-       <value>^Reflect\.[^/]+$</value>
-       <value>^browserPerformance\.[^/]+$</value>
-       <value>^WIZ_global_data\.[^/]+$</value>
-       <value>^Math\.[^/]+$</value>
-       <value>^core\.[^/]+$</value>
-       <value>^gapi\.[^/]+$</value>
-       <value>^error\.[^/]+$</value>
-       <value>^ready\.[^/]+$</value>
-       <value>^Expo\.[^/]+$</value>
-       <value>^Drone\.[^/]+$</value>
-       <value>^load\.[^/]+$</value>
-       <value>^bs\.[^/]+$</value>
-       <value>^NavigationControl\.[^/]+$</value>
-       <value>^modal\.[^/]+$</value>
-       <value>^HHmmss\.[^/]+$</value>
-       <value>^moment\.[^/]+$</value>
-       <value>^XFBML\.[^/]+$</value>
-       <value>^Sslac\.[^/]+$</value>
-       <value>^BaseLayout\.[^/]+$</value>
-       <value>^dp\.[^/]+$</value>
-       <value>^options\.[^/]+$</value>
-       <value>^layout\.[^/]+$</value>
-       <value>^matomo\.[^/]+$</value>
-       <value>^page\.[^/]+$</value>
-       <value>^prod\.[^/]+$</value>
-       <value>^comments\.[^/]+$</value>
-       <value>^people\.[^/]+$</value>
-       <value>^peoplesearch\.[^/]+$</value>
-       <value>^networkupdates\.[^/]+$</value>
-       <value>^memberupdates\.[^/]+$</value>
-       <value>^groups\.[^/]+$</value>
-       <value>^connections\.[^/]+$</value>
-       <value>^xdoor\.[^/]+$</value>
-       <value>^IN\.[^/]+$</value>
-       <value>^urls\.[^/]+$</value>
-       <value>^item\.[^/]+$</value>
-       <value>^additional\.[^/]+$</value>
-       <value>^nav\.[^/]+$</value>
-       <value>^current\.[^/]+$</value>
-       <value>^session\.[^/]+$</value>
-       <value>^support\.[^/]+$</value>
-       <value>^udata\.[^/]+$</value>
-       <value>^DC\.[^/]+$</value>
-       <value>^post-actions\.[^/]+$</value>
-       <value>^share-link\.[^/]+$</value>
-       <value>^share-form\.[^/]+$</value>
-       <value>^pagination\.[^/]+$</value>
-       <value>^like-button\.[^/]+$</value>
-       <value>^itemDataObject\.[^/]+$</value>
-       <value>^shared\.[^/]+$</value>
-       <value>^jquery\.[^/]+$</value>
-       <value>^server\.[^/]+$</value>
-       <value>^smartmediaClient\.[^/]+$</value>
-       <value>^[^/]+\.default$</value>
-       <value>^[^/]+\.classic$</value>
-       <value>^post-form(\.|-)[^/]+$</value>
-       <value>^[^/]+\.js$</value>
-       <value>^[0-9a-zA-Z][a-zA-Z]\.[0-9a-zA-Z][a-zA-Z]$</value>
-       <!-- dates and date formats -->
-       <value>^\d\d/\d\d/\d\d(\d\d)?$</value>
-       <!-- Pipes, parentheses and @ are REALLY rare in valid URLs -->
-       <value>^.*\|.*$</value>
-       <value>^.*\(.*$</value>
-       <value>^.*\).*$</value>
-       <value>^.*@.*$</value>
-       <value>^.*%40.*$</value>
-       <!-- Floating point numbers. E.g. latitude, longitude -->
-       <value>^-?\d+\.\d+$</value>
-       <!-- Common units-->
-       <value>^-?\d+\.?\d*(r?em|vw|vh|px|KB|MB|GB|kg|cm|mm|s|ms)$</value>
-       <!-- hex.dec-->
-       <value>^[a-f0-9]+\.\d+$</value>
-       <value>^.*\?variant=.*$</value>
-       <!-- Valid content is unlikely to start with dot or dash -->
-       <value>^\..*$</value>
-       <value>^-.*$</value>
-       <!-- Mime types -->
-       <value>^(video|audio)/[^/]+$</value>
-       <!-- Ignore what are clearly .dk domains -->
-       <value>^[a-zA-Z-]+\.dk$</value>
-       <!-- E.g. 3.5.0. Very common in some JS libraries for strings of this nature but very unlikely to
-            be a relative URL. Also cover variants that begin with v (e.g. v3.5.0) -->
-       <value>^[0-9]+\.([0-9]+\.)*[0-9]+$</value>
-       <value>^v([0-9]+\.)*[0-9]+$</value>
-       <value>^[a-zA-Z]+-[0-9]+((\.|-)[0-9]+)*$</value>
-       <value>^Microsoft\.XMLHTTP$</value>
-       <!-- Avoid extracting MediaElement.js elements as path segments -->
-       <value>^mejs\.[a-zA-Z0-9-]+$</value>
-       <!-- Avoid common Google Tag Manager elements -->
-       <value>^.*gtm\..*$</value>
-       <!-- Avoid in GA tracking code -->
-       <value>^developer_id\..+$</value>
-       <!-- Timezones, e.g. Atlantic/Reykjavik, America/New_York etc.
-            This does't capture every timezone name, but should cover the majority -->
-       <value>^Atlantic/[a-zA-Z_]+$</value>
-       <value>^Africa/[a-zA-Z_]+$</value>
-       <value>^America/[a-zA-Z_]+$</value>
-       <value>^Asia/[a-zA-Z_]+$</value>
-       <value>^Australia/[a-zA-Z_]+$</value>
-       <value>^Canada/[a-zA-Z_]+$</value>
-       <value>^Europe/[a-zA-Z_]+$</value>
-       <value>^node_modules/.*$</value>
-     </list>
-   </property>
-   <!-- It also filters agains a list of literal strings that are blacklisted (this is case sensitive)-->
-   <property name="rejectRelativeIgnoreList">
-     <list>
-       <value>ace/mode/less</value>
-       <value>ace/theme/textmate</value>
-       <value>ace/ext/language_tools</value>
-       <value>api/start/</value>
-       <value>API/</value>
-       <value>API/noticeError/called</value>
-       <value>application.version</value>
-       <value>browser/logs</value>
-       <value>browser/blobs</value>
-       <value>Captions/Subtitles</value>
-       <value>Billedtekster/Undertekster</value>
-       <value>d/m/Y</value>
-       <value>dd.mm.yy</value>
-       <value>dd.mm.yyyy</value>
-       <value>dd/mm/yy</value>
-       <value>dd/mm/yyyy</value>
-       <value>YYYY/MM/DD</value>
-       <value>dd/mm/yyyy</value>
-       <value>DD/MM/YYYY</value>
-       <value>MM/DD/YYYY</value>
-       <value>DD/M/YYYY</value>
-       <value>MM/D/YYYY</value>
-       <value>m/d/Y</value>
-       <value>Header/Seen</value>
-       <value>init/start</value>
-       <value>elementor/frontend/init</value>
-       <value>elementor/lazyload/observe</value>
-       <value>elementor/popup/show</value>
-       <value>Filter/Dispatcher</value>
-       <value>Firefox/</value>
-       <value>g.doubleclick</value>
-       <value>Generic/CSPViolation/Detected</value>
-       <value>gform/post_render</value>
-       <value>gform/postRender</value>
-       <value>gform/theme/scripts_loaded</value>
-       <value>heading.default</value>
-       <value>litespeed/javascript</value>
-       <value>multipart/form-data</value>
-       <value>privacy.cookies_enabled</value>
-       <value>session_trace.enabled</value>
-       <value>sitekit.withgoogle.com</value>
-       <value>ss.is_SU</value>
-       <value>ss.O_ID</value>
-       <value>ss.U_ID</value>
-       <value>text/javascript</value>
-       <value>text/css</value>
-       <value>track/</value>
-       <value>ical=1</value>
-       <value>n/j/Y</value>
-       <value>tribe/events</value>
-       <value>events/tag</value>
-       <value>?rest_route=</value>
-       <!-- <value>/wp-json/oembed/</value> -->
-     </list>
-   </property>
+ <bean id="extractorJs" class="org.archive.modules.extractor.ExtractorJS">
  </bean>
 
  <bean id="extractorSwf" class="org.archive.modules.extractor.ExtractorSWF">
@@ -723,8 +354,8 @@ extractorJs.enabled=true
  </bean>
  
  <!-- FRONTIER: Record of all URIs discovered and queued-for-collection -->
- <bean id="frontier" class="org.archive.crawler.frontier.BdbFrontier">
-   <property name="queuePrecedencePolicy" ref="queuePrecedenceBean"/>
+ <bean id="frontier"
+   class="org.archive.crawler.frontier.BdbFrontier">
  </bean>
 
   <!-- URI UNIQ FILTER: Used by frontier to remember already-included URIs -->
@@ -932,145 +563,13 @@ default H3 policy is org.archive.crawler.frontier.SurtAuthorityQueueAssignmentPo
  <bean id="loggerModule" 
    class="org.archive.crawler.reporting.CrawlerLoggerModule">
  </bean>
- <!-- SHEETOVERLAYMANAGER (START)
-    Manager of sheets of contextual overlays
-    Autowired to include any SheetForSurtPrefix or SheetForDecideRuled beans
-    -->
-    <bean id="sheetOverlaysManager" autowire="byType" class="org.archive.crawler.spring.SheetOverlaysManager">
-    </bean>
-    <!-- SHEETOVERLAYMANAGER (END) -->
 
-    <!-- OVERLAY SHEETS (START) -->
-    <bean id="queuePrecedenceBean" class="org.archive.crawler.frontier.precedence.BaseQueuePrecedencePolicy"/>
-
-    <!-- SETTINGS OVERLAY SHEETS (START) -->
-    <bean class="org.archive.crawler.spring.SurtPrefixesSheetAssociation">
-        <property name="surtPrefixes">
-            <list>
-                <value>http://(dk,politiken,</value>
-            </list>
-        </property>
-        <property name="targetSheetNames">
-            <list>
-                <value>changeUserAgent</value>
-            </list>
-        </property>
-    </bean>
-    <bean class="org.archive.crawler.spring.SurtPrefixesSheetAssociation">
-        <property name="surtPrefixes">
-            <list>
-                <value>http://(dk,version2,</value>
-                <value>http://(dk,ing,</value>
-            </list>
-        </property>
-        <property name="targetSheetNames">
-            <list>
-                <value>ipplus</value>
-            </list>
-        </property>
-    </bean>
-    <bean class="org.archive.crawler.spring.SurtPrefixesSheetAssociation">
-        <property name="surtPrefixes">
-            <list>
-                <value>http://(com,jwpsrv,videos-cloudfront,</value>
-                <value>http://(net,akamaized,</value>
-                <value>http://(net,cloudfront,</value>
-                <!--<value>http://(com,jwplatform,content,)/videoes/</value>-->
-            </list>
-        </property>
-        <property name="targetSheetNames">
-            <list>
-                <value>prioritySheet</value>
-            </list>
-        </property>
-    </bean>
-    <bean id="changeUserAgent" class="org.archive.spring.Sheet">
-        <property name="map">
-            <map>
-                <entry key="metadata.userAgentTemplate" value="Mozilla/5.0 (compatible; kb.dk_bot; heritrix/3.4.0 +@OPERATOR_CONTACT_URL@) 06b46e292d41a459fb37fd0cc53a4c3e"/>
-            </map>
-        </property>
-    </bean>
-    <bean id="ipplus" class="org.archive.spring.Sheet">
-        <property name="map">
-            <map>
-                <entry key="fetchHttp.acceptHeaders" value="Cookie: ipplus=Nuoqu7iAvAxSfOGpiqhtTB7d0iw9mlOH3FLwcFSJgGwsitOayGiKH94P1rS2vJUkfz2GVFaiE3CJ0fJV"/>
-            </map>
-        </property>
-    </bean>
-    <bean id="prioritySheet" class="org.archive.spring.Sheet">
-        <property name="map">
-            <map>
-                <entry key="preparer.queueAssignmentPolicy">
-                    <ref bean="alternativeQueuePolicy" />
-                </entry>
-                <entry key="frontier.queuePrecedencePolicy.basePrecedence" value="10" />
-                <entry key="alternativeQueuePolicy.forceQueueAssignment" value="highPriorityQueue" />
-            </map>
-        </property>
-    </bean>
-    <bean class="org.archive.crawler.spring.DecideRuledSheetAssociation">
-        <property name="targetSheetNames">
-            <list>
-                <value>disableExtractorJS</value>
-            </list>
-        </property>
-        <property name="rules">
-            <bean class="org.archive.modules.deciderules.MatchesListRegexDecideRule">
-                <property name="decision" value="ACCEPT"/>
-                <property name="regexList">
-                    <list>
-                        <value>.*\?nocache=.*</value>
-                        <value>.*\/wp-json\/?$</value>
-                        <value>.*\/wp-includes\/$</value>
-                        <value>.*\/cart\/?$</value>
-                        <value>.*\.min\.js\?.*</value>
-                        <value>.*\.min\.css\?.*</value>
-                        <value>.*\/wp-json\/wp\/v[0-9]+\/posts$</value>
-                        <value>.*\/wp-json\/wp\/v[0-9]+\/media(\/|\?parent).*</value>
-                        <value>.*\/wp-json\/wp\/v[0-9]+\/pages\/[0-9]+</value>
-                        <value>.*\/wp-json\/.*media.*</value>
-                        <value>.*\/wp-json\/wp\/v[0-9]+\/users\/[0-9]+</value>
-                        <value>.*\/wp-json\/wp\/v[0-9]+\/types\/.*</value>
-                        <value>.*\/wp-json\/wp\/v[0-9]+\/taxonomies\.*</value>
-                        <value>.*\/wp-json\/wp\/v[0-9]+\/tags\/.*</value>
-                        <value>.*\/wc-blocks-data\.js[^\/]*$</value>
-                        <value>.*\/cart-frontend\.js[^\/]*$</value>
-                        <value>.*\/blocks-checkout\.js[^\/]*$</value>
-                        <value>.*\/woocommerce\/assets\/client\/blocks\/.*</value>
-                        <value>.*\/wp-json\/tribe\/(tickets|events)\/v[0-9]\/$</value>
-                        <value>.*\/gtag\/js\?.*</value>
-                        <value>.*\/events\/202[0-9]-[0-1][0-9]-[0-3][0-9]\/$</value>
-                        <value>.*\/_next\/static\/.*</value>
-                        <value>.*rest_route=.*</value>
-                        <value>.*instagram\.com\/embed\.js</value>
-                        <value>.*platform\.twitter\.com\/widgets\.js</value>
-                        <value>(?i).*(\/(image|font|static|chunks|app)(?=\/)){3,}.*</value>
-                        <value>(?i).*(\/(Billedtekster|elementor|lazyload|includes|js)(?=\/)){3,}.*</value>
-                        <value>(?i).*\/search(\/|\?).*</value>
-                        <value>.*\/includes\/js\/index\.js</value>
-                        <value>(?i).*\/phpMyAdmin\/.*</value>
-                        <value>.*\/API\/logging\/.*</value>
-                        <value>.*\/API\/register\/.*</value>
-                        <value>(?i).*\/catalogsearch(\/|\?).*</value>
-                        <value>.*\/wp-json\/semplice\/v1\/frontend</value>
-                        <value>.*\/wrapperMessagingWithoutDetection\.js$</value>
-                    </list>
-                </property>
-            </bean>
-        </property>
-    </bean>
-    <bean id="disableExtractorJS" class="org.archive.spring.Sheet">
-        <property name="map">
-            <map>
-                <entry key="extractorJs.enabled" value="false"/>
-                <entry key="extractorHtml.extractJavascript" value="false"/>
-            </map>
-        </property>
-    </bean>
-    <bean id="alternativeQueuePolicy" class="org.archive.crawler.frontier.HostnameQueueAssignmentPolicy" />
-    <!-- SETTINGS OVERLAY SHEETS (END) -->
-    <!-- OVERLAY SHEETS (END) -->
+ <!-- SHEETOVERLAYMANAGER: manager of sheets of contextual overlays
+      Autowired to include any SheetForSurtPrefix or
+      SheetForDecideRuled beans -->
+ <bean id="sheetOverlaysManager" autowire="byType"
+   class="org.archive.crawler.spring.SheetOverlaysManager">
+ </bean>
 
  <!-- BDBMODULE: shared BDB-JE disk persistence manager -->
  <bean id="bdb" 
