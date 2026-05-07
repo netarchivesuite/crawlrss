@@ -11,7 +11,7 @@
 -->
   <groupId>is.landsbokasafn.crawl-rss</groupId>
   <artifactId>crawl-rss</artifactId>
-  <version>0.0.4</version>
+  <version>0.0.5-SNAPSHOT</version>
   <name>Crawler RSS</name>
   <description>RSS crawling add-on for Heritrix 3</description>
 
@@ -38,7 +38,7 @@
 
     <!-- <developerConnection>scm:https://kris-sigur@github.com/Landsbokasafn/crawlrss.git</developerConnection>
     <url>https://github.com/Landsbokasafn/crawlrss</url> -->
-    <tag>crawl-rss-0.0.4</tag>
+    <tag>HEAD</tag>
   </scm>
   <organization>
     <name>National and University Library of Iceland</name>
