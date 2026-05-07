@@ -50,9 +50,9 @@
 ## Q: can overrides like 'fetchDns.enabled=false' be used to disable the beans?
 
 metadata.jobName=crawlrss_cxml
-metadata.description=Default Profile
+metadata.description=Default Profile with CrawlRSS
 metadata.operator=Admin
-metadata.userAgentTemplate=Mozilla/5.0 (compatible; heritrix/3.3.0 +@OPERATOR_CONTACT_URL@)
+metadata.userAgentTemplate=Mozilla/5.0 (compatible; heritrix/3.13.0 +@OPERATOR_CONTACT_URL@)
 ## Edit the two following lines to match your setup.
 metadata.operatorContactUrl=http://netarkivet.dk/webcrawler/
 metadata.operatorFrom=info@netarkivet.dk
@@ -68,6 +68,7 @@ crawlController.maxToeThreads=50
 crawlController.recorderOutBufferBytes=4096
 crawlController.recorderInBufferBytes=65536
 crawlController.pauseAtStart=false
+crawlController.runWhileEmpty=true
 crawlController.scratchDir=scratch
 
 ## org.archive.bdb.BdbModule overrides
@@ -76,7 +77,6 @@ bdb.cachePercent=40
 
 ## seeds properties
 seeds.sourceTagSeeds=false
-
 
 ## Politeness overrides
 disposition.delayFactor=1.0
@@ -231,7 +231,7 @@ extractorJs.enabled=true
  </bean>
   <bean id="preparer" class="is.landsbokasafn.crawler.rss.RssFrontierPreparer">
     <!-- <property name="preferenceDepthHops" value="-1" /> -->
-    <property name="preferenceEmbedHops" value="0" />
+    <property name="preferenceEmbedHops" value="1" />
     <!-- <property name="canonicalizationPolicy">
           <ref bean="canonicalizationPolicy" />
          </property> -->
@@ -301,8 +301,8 @@ extractorJs.enabled=true
     <ref bean="fetchDns"/>
     <!-- ...fetch if HTTP URI... -->
     <ref bean="fetchHttp"/>
-     <!-- ...extract outlinks from RSS feed... -->
-             <ref bean="extractorRss"/>
+    <!-- ...extract outlinks from RSS feed... -->
+    <ref bean="extractorRss"/>
     <!-- ...extract oulinks from HTTP headers... -->
     <ref bean="extractorHttp"/>
     <!-- ...extract oulinks from HTML content... -->
@@ -323,7 +323,6 @@ extractorJs.enabled=true
 <!-- Here the (W)arc writer is inserted -->
 
 %{ARCHIVER_PROCESSOR_BEAN_PLACEHOLDER}
-
 
  <bean id="candidates" class="org.archive.crawler.postprocessor.CandidatesProcessor">
   <!-- <property name="seedsRedirectNewSeeds" value="true" /> -->
@@ -355,7 +354,7 @@ extractorJs.enabled=true
  </bean>
  
  <!-- FRONTIER: Record of all URIs discovered and queued-for-collection -->
- <bean id="frontier" 
+ <bean id="frontier"
    class="org.archive.crawler.frontier.BdbFrontier">
  </bean>
 
@@ -465,7 +464,7 @@ default H3 policy is org.archive.crawler.frontier.SurtAuthorityQueueAssignmentPo
 
 <!-- sample use of credentialStore http://stackoverflow.com/questions/17756520/use-of-heritrixs-htmlformcredential-and-credentialstore  -->
 
- <bean id="credentialStore" 
+<bean id="credentialStore"
    class="org.archive.modules.credential.CredentialStore">
  <property name="credentials">
  <map>
@@ -564,9 +563,9 @@ default H3 policy is org.archive.crawler.frontier.SurtAuthorityQueueAssignmentPo
  <bean id="loggerModule" 
    class="org.archive.crawler.reporting.CrawlerLoggerModule">
  </bean>
- 
+
  <!-- SHEETOVERLAYMANAGER: manager of sheets of contextual overlays
-      Autowired to include any SheetForSurtPrefix or 
+      Autowired to include any SheetForSurtPrefix or
       SheetForDecideRuled beans -->
  <bean id="sheetOverlaysManager" autowire="byType"
    class="org.archive.crawler.spring.SheetOverlaysManager">

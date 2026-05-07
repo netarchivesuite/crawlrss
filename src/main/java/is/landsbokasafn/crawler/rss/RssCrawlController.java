@@ -26,13 +26,15 @@ import static is.landsbokasafn.crawler.rss.RssAttributeConstants.RSS_URI_TYPE;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.archive.crawler.datamodel.UriUniqFilter;
 import org.archive.crawler.event.CrawlURIDispositionEvent;
 import org.archive.crawler.framework.CrawlController;
@@ -142,7 +144,7 @@ public class RssCrawlController implements
     protected void startManagerThread() {
         managerThread = new Thread(this+".managerThread") {
             public void run() {
-            	log.fine("Starting manager thread");
+            	log.info("Starting manager thread");
                 RssCrawlController.this.controlTasks();
             }
         };
@@ -177,12 +179,12 @@ public class RssCrawlController implements
     protected void handleRssLink(CrawlURI curi) {
     	// Need to ensure that all feeds associated with the site are finished before scheduling with the 
     	// frontier. Add it to the discovered items. 
-		getSiteFor(curi).addDiscoveredItems(curi);
+		Optional.ofNullable(getSiteFor(curi)).ifPresent(site -> site.addDiscoveredItems(curi));
 	}
 
     protected void handleRssDerived(CrawlURI curi) {
     	// Just note that the URI is in progress for the site
-		getSiteFor(curi).incrementInProgressURLs();
+		Optional.ofNullable(getSiteFor(curi)).ifPresent(RssSite::incrementInProgressURLs);
 	}
 
 	protected void controlTasks() {
@@ -194,7 +196,7 @@ public class RssCrawlController implements
 				log.log(Level.FINE,"Interrupted",e);
 			}
 		}
-		log.fine("Frontier is now running");
+		log.info("Frontier is now running");
 		while (!shouldStop) {
 			State state = (State)controller.getState();
 			if (state==State.RUNNING || state==State.EMPTY) {
@@ -202,7 +204,9 @@ public class RssCrawlController implements
 					readConfig(); // Check for new sites
 					// Trigger updates in all WAITING and ENDED sites
 					for (RssSite site : sites.values()) {
+						log.info("Checking " + site.name);
 						if (site.getState()==RssSiteState.WAITING || site.getState()==RssSiteState.ENDED) {
+							log.info("Updating " + site.name);
 							site.doUpdate();
 						}
 					}
@@ -210,7 +214,7 @@ public class RssCrawlController implements
 				}
 				for (RssSite site : sites.values()) {
 					for (CrawlURI curi : site.emitReadyFeeds()) {
-						log.fine("Scheduling: " + curi.getURI());
+						log.info("Scheduling: " + curi.getURI());
 						frontier.schedule(curi);
 					}
 				}
@@ -221,27 +225,27 @@ public class RssCrawlController implements
 				log.log(Level.WARNING,"Unexpected interruption of RssCrawlController control thread", e);
 			}
 		}
-		log.fine("EXITING");
+		log.info("EXITING");
 	}
 
 	private void readConfig() {
 		for (RssSite site : configurationManager.getSites()){
 			if (!sites.containsKey(site.getName())) {
-				log.fine("Site found in configuration: " + site.getName());
+				log.info("Site found in configuration: " + site.getName());
 				this.sites.put(site.getName(), site);
 			} 
 		}
 	}
-	
+
 	@Override
 	@PostConstruct
 	public void start() {
 		if (started) {
+			log.info("RssCrawlController already started.");
 			return;
 		}
-		log.fine("Starting RssCrawlController");
+		log.info("Starting RssCrawlController");
 		started = true;
-
 		readConfig();
 		lastCheckedConfig=System.currentTimeMillis();
 		recheckConfig=configurationManager.supportsRuntimeChanges();
@@ -274,6 +278,8 @@ public class RssCrawlController implements
 	public void onApplicationEvent(ApplicationEvent event) {
         if(event instanceof CrawlURIDispositionEvent) {
             CrawlURIDispositionEvent dvent = (CrawlURIDispositionEvent)event;
+			log.fine(this.getClass().getName() +
+					" responding to " + dvent.getCrawlURI() + " " + dvent.getDisposition());
             switch(dvent.getDisposition()) {
                 case SUCCEEDED:
                 case FAILED:
@@ -292,7 +298,8 @@ public class RssCrawlController implements
 	}
 	
 	private void finished(CrawlURI curi){ 
-		log.fine(curi.getURI());
+		log.fine(this.getClass().getName() + " finished with " + curi.getURI()
+				+ " " + getUriType(curi));
 		RssSite siteFor = getSiteFor(curi);
 		switch (getUriType(curi)) {
 			case RSS_FEED :
@@ -320,6 +327,8 @@ public class RssCrawlController implements
 	}
 	
 	private RssUriType getUriType(CrawlURI curi) {
+		log.info("Starting RssCrawlController from getUriType()");
+		this.start();
 		Object o = curi.getData().get(RSS_URI_TYPE);
 		if (o==null || !(o instanceof RssUriType) ) {
 			// This is an error, log and assume derived (extracted from regular content, not RSS feed) 
@@ -332,7 +341,7 @@ public class RssCrawlController implements
 	@Override
 	public void receiveDuplicate(CrawlURI curi) {
 		log.fine(curi.getURI());
-		getSiteFor(curi).decrementInProgressURLs();
+		Optional.ofNullable(getSiteFor(curi)).ifPresent(RssSite::decrementInProgressURLs);
 	}
 
 	

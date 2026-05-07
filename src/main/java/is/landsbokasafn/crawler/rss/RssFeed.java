@@ -27,9 +27,9 @@ import static is.landsbokasafn.crawler.rss.RssAttributeConstants.RSS_URI_TYPE;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.httpclient.URIException;
 import org.archive.modules.CrawlURI;
 import org.archive.net.UURIFactory;
+import org.archive.url.URIException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class RssFeed {
