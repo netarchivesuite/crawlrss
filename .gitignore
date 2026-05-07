@@ -9,3 +9,6 @@
 /.classpath
 /.settings
 .idea/*
+/.proxyai/
+/.idea/
+/crawl-rss.iml
