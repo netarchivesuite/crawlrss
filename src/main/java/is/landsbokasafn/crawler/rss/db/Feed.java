@@ -43,7 +43,7 @@ public class Feed {
 	@JoinTable(name="FeedPage", 
 				joinColumns={@JoinColumn(name="Feed")}, 
 				inverseJoinColumns={@JoinColumn(name="Page")})
-	private Set<ImpliedPage> pages = new HashSet<ImpliedPage>();	
+	private Set<ImpliedPage> pages = new HashSet<>();
 	
 	public Feed() {
 		
