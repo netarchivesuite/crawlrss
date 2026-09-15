@@ -58,7 +58,7 @@ public class RssCrawlController implements
 	boolean shouldStop = false;
 	boolean started = false;
 	
-	ConcurrentHashMap<String, RssSite> sites = new ConcurrentHashMap<String, RssSite>();
+	ConcurrentHashMap<String, RssSite> sites = new ConcurrentHashMap<>();
 
 	long lastCheckedConfig;
 	boolean recheckConfig = false;
