@@ -1,7 +1,7 @@
 /*
  *  This file is part of the Crawl RSS - Heritrix 3 add-on module
  *
- *  Licensed to the National and Univeristy Library of Iceland (NULI) by one or  
+ *  Licensed to the National and University Library of Iceland (NULI) by one or  
  *  more individual contributors. 
  *
  *  The NULI licenses this file to You under the Apache License, Version 2.0
@@ -133,7 +133,7 @@ public class RssExtractor extends Extractor {
 			return;
 		}
 		
-		// Set a identical digest revisit profile
+		// Set an identical digest revisit profile
 		IdenticalPayloadDigestRevisit revisit = new IdenticalPayloadDigestRevisit(currentDigest);
 		revisit.setRefersToTargetURI(curi.getURI()); //Same URI
 		Date lastFetchTime = (Date)curi.getData().get(LAST_FETCH_TIME);

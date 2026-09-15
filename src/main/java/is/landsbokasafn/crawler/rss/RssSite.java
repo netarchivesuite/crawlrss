@@ -1,7 +1,7 @@
 /*
  *  This file is part of the Crawl RSS - Heritrix 3 add-on module
  *
- *  Licensed to the National and Univeristy Library of Iceland (NULI) by one or  
+ *  Licensed to the National and University Library of Iceland (NULI) by one or  
  *  more individual contributors. 
  *
  *  The NULI licenses this file to You under the Apache License, Version 2.0
@@ -233,7 +233,7 @@ public class RssSite {
 	}
 
 	/**
-	 * The method does nothing, but is here to enable sub-classes to easily step in at the right moment to
+	 * The method does nothing, but is here to enable subclasses to easily step in at the right moment to
 	 * update configuration. This method should never be invoked unless state is UPDATING.  
 	 */
 	protected void internalUpdate() {

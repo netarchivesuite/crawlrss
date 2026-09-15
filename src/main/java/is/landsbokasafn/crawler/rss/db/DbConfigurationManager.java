@@ -87,7 +87,7 @@ public class DbConfigurationManager implements RssConfigurationManager {
 
 	/**
 	 * Syncs DB and crawler state for one RssSite. Triggered by {@link DbRssSite#doUpdate()}. 
-	 * @param rssSite The rss site begin updated. That site must be in the state UPDATING. 
+	 * @param rssSite The rss site being updated. That site must be in the state UPDATING.
 	 * @throws IllegalStateException If the rssSite is not in the state {@link RssSiteState#UPDATING}
 	 */
     protected synchronized void updateSite(DbRssSite rssSite) {
