@@ -111,9 +111,7 @@ public class RssExtractor extends Extractor {
 				}
 			}
 			
-	    } catch(IOException e){
-	        curi.getNonFatalFailures().add(e);
-	    } catch(FeedException e){
+	    } catch(IOException | FeedException e){
 	        curi.getNonFatalFailures().add(e);
 	    } finally {
 	        IOUtils.closeQuietly(reader);
