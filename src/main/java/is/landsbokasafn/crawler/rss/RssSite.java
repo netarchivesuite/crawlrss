@@ -1,7 +1,7 @@
 /*
  *  This file is part of the Crawl RSS - Heritrix 3 add-on module
  *
- *  Licensed to the National and Univeristy Library of Iceland (NULI) by one or  
+ *  Licensed to the National and University Library of Iceland (NULI) by one or  
  *  more individual contributors. 
  *
  *  The NULI licenses this file to You under the Apache License, Version 2.0
@@ -61,13 +61,13 @@ public class RssSite {
 	/**
 	 * Maps feed URIs (as strings) to RssFeed instances.
 	 */
-	ConcurrentHashMap<String, RssFeed> feeds = new ConcurrentHashMap<String, RssFeed>();
+	ConcurrentHashMap<String, RssFeed> feeds = new ConcurrentHashMap<>();
 
 	/**
 	 * Items discovered during a refresh of all feeds. Used to ensure we only crawl each URL once per
 	 * feed refresh
 	 */
-	SortedSet<String> discoverdItems = new TreeSet<String>();
+	SortedSet<String> discoverdItems = new TreeSet<>();
 
 	public RssSite() {
 
@@ -114,7 +114,7 @@ public class RssSite {
 	}
 	
 	public List<RssFeed> getRssFeeds() {
-		return new LinkedList<RssFeed>(feeds.values());
+		return new LinkedList<>(feeds.values());
 	}
 	
 	public void setRssFeeds(List<RssFeed> feeds) {
@@ -141,7 +141,7 @@ public class RssSite {
 	}
 
 	public List<CrawlURI> emitReadyFeeds() {
-		List<CrawlURI> ready = new LinkedList<CrawlURI>(); 
+		List<CrawlURI> ready = new LinkedList<>();
 		if (state.equals(WAITING) && lastFeedUpdate+minWaitPeriodMs<System.currentTimeMillis()) {
 			log.fine("");
 			for (RssFeed feed : this.feeds.values()) {
@@ -204,7 +204,7 @@ public class RssSite {
 	}
 	
 	protected void enterWaitingState() {
-		discoverdItems = new TreeSet<String>();
+		discoverdItems = new TreeSet<>();
 		state = WAITING;
 	}
 	
@@ -233,7 +233,7 @@ public class RssSite {
 	}
 
 	/**
-	 * The method does nothing, but is here to enable sub-classes to easily step in at the right moment to
+	 * The method does nothing, but is here to enable subclasses to easily step in at the right moment to
 	 * update configuration. This method should never be invoked unless state is UPDATING.  
 	 */
 	protected void internalUpdate() {
