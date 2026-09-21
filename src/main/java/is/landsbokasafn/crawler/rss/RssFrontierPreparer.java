@@ -1,7 +1,7 @@
 /*
  *  This file is part of the Crawl RSS - Heritrix 3 add-on module
  *
- *  Licensed to the National and Univeristy Library of Iceland (NULI) by one or  
+ *  Licensed to the National and University Library of Iceland (NULI) by one or  
  *  more individual contributors. 
  *
  *  The NULI licenses this file to You under the Apache License, Version 2.0
@@ -48,9 +48,7 @@ public class RssFrontierPreparer extends FrontierPreparer {
 		
 		// Set necessary RSS crawl data
     	curi.getData().put(RSS_SITE, curi.getFullVia().getData().get(RSS_SITE));
-    	if (curi.getData().get(RSS_URI_TYPE)==null) {
-    		curi.getData().put(RSS_URI_TYPE, RssUriType.RSS_DERIVED);
-    	}
+        curi.getData().putIfAbsent(RSS_URI_TYPE, RssUriType.RSS_DERIVED);
     	
     	if (RssUriType.getFor(curi)!=RssUriType.RSS_DERIVED) {
     		// All non-derived data is exempt from the uniq filters. RssCrawlController may still

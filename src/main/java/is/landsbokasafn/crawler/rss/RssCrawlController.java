@@ -1,7 +1,7 @@
 /*
  *  This file is part of the Crawl RSS - Heritrix 3 add-on module
  *
- *  Licensed to the National and Univeristy Library of Iceland (NULI) by one or  
+ *  Licensed to the National and University Library of Iceland (NULI) by one or  
  *  more individual contributors. 
  *
  *  The NULI licenses this file to You under the Apache License, Version 2.0
@@ -18,15 +18,11 @@
  */
 package is.landsbokasafn.crawler.rss;
 
-import static is.landsbokasafn.crawler.rss.RssAttributeConstants.RSS_IMPLIED_LINKS;
-import static is.landsbokasafn.crawler.rss.RssAttributeConstants.RSS_MOST_RECENTLY_SEEN;
-import static is.landsbokasafn.crawler.rss.RssAttributeConstants.RSS_SITE;
 import static is.landsbokasafn.crawler.rss.RssAttributeConstants.RSS_URI_TYPE;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
@@ -58,7 +54,7 @@ public class RssCrawlController implements
 	boolean shouldStop = false;
 	boolean started = false;
 	
-	ConcurrentHashMap<String, RssSite> sites = new ConcurrentHashMap<String, RssSite>();
+	ConcurrentHashMap<String, RssSite> sites = new ConcurrentHashMap<>();
 
 	long lastCheckedConfig;
 	boolean recheckConfig = false;

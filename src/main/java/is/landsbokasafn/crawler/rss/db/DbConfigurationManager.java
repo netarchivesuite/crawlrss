@@ -40,7 +40,7 @@ public class DbConfigurationManager implements RssConfigurationManager {
 		return this.sessionFactory;
 	}
 
-	private Map<String, RssSite> knownSites = new HashMap<String, RssSite>();
+	private Map<String, RssSite> knownSites = new HashMap<>();
 
 
 	public Collection<RssSite> getSites() {
@@ -77,7 +77,7 @@ public class DbConfigurationManager implements RssConfigurationManager {
 	}
 	
 	private List<String> getPages(Feed dbFeed) {
-		List<String> pages = new LinkedList<String>();
+		List<String> pages = new LinkedList<>();
 		for (ImpliedPage page : dbFeed.getPages()) {
 			pages.add(page.uri);
 		}
@@ -87,7 +87,7 @@ public class DbConfigurationManager implements RssConfigurationManager {
 
 	/**
 	 * Syncs DB and crawler state for one RssSite. Triggered by {@link DbRssSite#doUpdate()}. 
-	 * @param rssSite The rss site begin updated. That site must be in the state UPDATING. 
+	 * @param rssSite The rss site being updated. That site must be in the state UPDATING.
 	 * @throws IllegalStateException If the rssSite is not in the state {@link RssSiteState#UPDATING}
 	 */
     protected synchronized void updateSite(DbRssSite rssSite) {
@@ -108,7 +108,7 @@ public class DbConfigurationManager implements RssConfigurationManager {
 			site.setLastFeedUpdate(new Date(rssSite.getLastFeedUpdate()));
 	
 			// Process feeds
-			Map<String, Feed> dbFeedsTmp = new HashMap<String, Feed>();
+			Map<String, Feed> dbFeedsTmp = new HashMap<>();
 			for (Feed f : site.getFeeds()) {
 				dbFeedsTmp.put(f.uri, f);
 			}
