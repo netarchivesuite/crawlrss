@@ -126,10 +126,10 @@ public class RssFeed {
 
 	public String getReport() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("    Feed: " + uri + "\n"); 
-		sb.append("      Most recent seen: " + new Date(getMostRecentlySeen()) + "\n");
+		sb.append("    Feed: ").append(uri).append("\n");
+		sb.append("      Most recent seen: ").append(new Date(getMostRecentlySeen())).append("\n");
 		for (String p : impliedPages) {
-			sb.append("      " + p + "\n");
+			sb.append("      ").append(p).append("\n");
 		}
 		return sb.toString();
 	}

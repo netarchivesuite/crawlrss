@@ -29,6 +29,6 @@ import org.archive.modules.CrawlURI;
  *
  */
 public interface DuplicateReceiver {
-	public void receiveDuplicate(CrawlURI curi);
+	void receiveDuplicate(CrawlURI curi);
 
 }

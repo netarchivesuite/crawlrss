@@ -243,13 +243,13 @@ public class RssSite {
 	public String getReport() {
 		try {
 		StringBuilder sb = new StringBuilder();
-		sb.append("RSS Site: " + name + "\n");
-		sb.append("  State: " + state + "\n");
-		sb.append("  Number of discovered items: " + discoverdItems.size() + "\n");
-		sb.append("  Minimum wait between emiting feeds: " + intervalFormatter.print(minWaitPeriod) + "\n");
-		sb.append("  Earliest next feed emission: " + new Date(lastFeedUpdate+minWaitPeriodMs) + "\n");
-		sb.append("  URLs being crawled: " + inProgressURLs.get() + "\n");
-		sb.append("  Feeds last emited: " + new Date(lastFeedUpdate) + "\n");
+		sb.append("RSS Site: ").append(name).append("\n");
+		sb.append("  State: ").append(state).append("\n");
+		sb.append("  Number of discovered items: ").append(discoverdItems.size()).append("\n");
+		sb.append("  Minimum wait between emitting feeds: ").append(intervalFormatter.print(minWaitPeriod)).append("\n");
+		sb.append("  Earliest next feed emission: ").append(new Date(lastFeedUpdate + minWaitPeriodMs)).append("\n");
+		sb.append("  URLs being crawled: ").append(inProgressURLs.get()).append("\n");
+		sb.append("  Feeds last emitted: ").append(new Date(lastFeedUpdate)).append("\n");
 		sb.append("  Feeds: \n");
 		for (RssFeed feed : feeds.values()) {
 			sb.append(feed.getReport());

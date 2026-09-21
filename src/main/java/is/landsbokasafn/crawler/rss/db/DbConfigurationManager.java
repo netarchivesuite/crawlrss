@@ -40,7 +40,7 @@ public class DbConfigurationManager implements RssConfigurationManager {
 		return this.sessionFactory;
 	}
 
-	private Map<String, RssSite> knownSites = new HashMap<>();
+	private final Map<String, RssSite> knownSites = new HashMap<>();
 
 
 	public Collection<RssSite> getSites() {

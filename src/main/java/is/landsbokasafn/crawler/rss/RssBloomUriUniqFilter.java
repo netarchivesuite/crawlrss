@@ -38,7 +38,7 @@ import org.archive.modules.CrawlURI;
 public class RssBloomUriUniqFilter extends BloomUriUniqFilter implements DuplicateNotifier {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = Logger.getLogger(BloomUriUniqFilter.class.getName());
+	private static final Logger log = Logger.getLogger(BloomUriUniqFilter.class.getName());
 	
 	DuplicateReceiver duplicateReciever = null;
 	public void setDuplicateListener(DuplicateReceiver duplicateReciever) {

@@ -345,7 +345,7 @@ public class RssCrawlController implements
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("RssCrawlController report \n");
-		sb.append("  Controller state: " + (started?(shouldStop?"should stop":"running"):"not started") + "\n");
+		sb.append("  Controller state: ").append(started ? (shouldStop ? "should stop" : "running") : "not started").append("\n");
 		sb.append(frontier.isRunning()?"  Frontier is running":"  Frontier is not running");
 		sb.append("\n");
 		
